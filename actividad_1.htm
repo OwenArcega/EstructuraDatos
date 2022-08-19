@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <script>
+        let sueldo = Number(prompt("Ingrese su sueldo: "));
+
+        if(sueldo <= 1000){
+            sueldo *= 1.18;
+            console.log("Su nuevo sueldo es: " + sueldo);
+        } else if(sueldo <= 1200){
+            sueldo *= 1.15;
+            console.log("Su nuevo sueldo es: " + sueldo);
+        } else if(sueldo <= 1450){
+            sueldo *= 1.12;
+            console.log("Su nuevo sueldo es: " + sueldo);
+        } else if(sueldo <= 1600){
+            sueldo *= 1.10;
+            console.log("Su nuevo sueldo es: " + sueldo);
+        } else {sueldo *= 1.08;}
+
+    </script>
+</body>
+</html>

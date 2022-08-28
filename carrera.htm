@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Carrera</title>
+</head>
+<body>
+    <script>
+
+    class Dado{
+
+    constructor(caras){
+        this.caras = caras; //Especifica las caras del dado
+                            //Por si no alcanzan para representar todas las posibilidades
+    }
+
+  	lanzar(){
+        return Math.floor((Math.random() * this.caras) + 1);
+    }
+  }
+  
+
+  class Participante{
+
+    constructor(nombre, dado){
+        this.nombre = nombre;
+        this.posicion = 0;
+        this.dado = new Dado(dado);
+    }
+
+    info(){
+        return `La posicion del corredor ${this.nombre} es: ${this.posicion}`;
+    }
+  }
+
+
+  class Tortuga extends Participante{
+    correr(){
+        let resultado = this.dado.lanzar();
+
+        if(resultado > 10){
+            this.posicion += 3;
+        } else if(resultado > 4){
+            this.posicion ++;
+        } else{
+            this.posicion -= 6;
+        }
+        //Si su turno inicia con un movimiento negativo, se mantiene en 0
+        if(this.posicion < 0){
+            this.posicion = 0;
+        }
+
+        return this.info();
+    }
+  }
+
+
+  class Liebre extends Participante{
+    correr(){
+        let resultado = this.dado.lanzar();
+
+        if(resultado > 16){
+            this.posicion += 9;
+        } else if(resultado > 9){
+            this.posicion ++;
+        } else if(resultado > 5){
+            
+        } else if(resultado > 2){
+            this.posicion -= 2;
+        } else{
+            this.posicion -= 12;
+        }
+            
+        if(this.posicion < 0){
+            this.posicion = 0;
+        }
+
+            return this.info();
+        }
+    }
+
+    class Carrera{
+        constructor(competidores){
+            this.competidores = competidores;
+            this.evento();
+        }
+
+        evento(){
+            let meta = 0; //Cuenta cuántos participantes han llegado a la meta al final del turno
+
+            loop1:
+            while(true){
+                for(let i = 0; i < this.competidores.length; i++){
+                    console.log(this.competidores[i].correr());
+                    if(this.competidores[i].posicion >= 100){
+                        meta++;
+                    }
+                }
+                if(meta > 1){ //Si uno o más participantes llegaron a la meta al final del turno, se acaba el evento
+                    break loop1;
+                }
+
+            }
+
+            this.resultado();
+        }
+
+        resultado(){
+            let ganadores = []; //Se almacenan los participantes que llegaron a la meta al finalizar la carrera
+            
+            for(let i = 0; i < this.competidores.length; i++){
+                if(this.competidores[i].posicion >= 100){
+                    ganadores.push(this.competidores[i].nombre);
+                }
+            }
+
+            if(ganadores.length > 1){ //Si hay más de un ganador, hubo un empate
+                console.log(`Hubo un empate entre los competidores: ${ganadores}`);
+            } else {
+                let ganador = ganadores[0].replace(',','') //Se limpia la coma si el participante no era el primero en tirar
+                console.log(`El ganadores es: ${ganador}`);
+            }
+        }
+    }
+
+    const tortuga = new Tortuga("Tortuga",20);
+    const liebre = new Liebre("Liebre",20);
+
+    const carrera1 = new Carrera([tortuga,liebre]);
+    </script>
+</body>
+</html>
